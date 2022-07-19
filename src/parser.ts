@@ -114,19 +114,26 @@ export function parseDecimal(
   if (typeof value === "bigint") {
     let digits = value as bigint;
 
+    if (digits === 0n) {
+      return {
+        nan: false,
+
+        finite: true,
+        negative: false,
+
+        significand: 0n,
+        exponent: 0n,
+      };
+    }
+
     const negative = digits < 0n;
     if (negative) digits = -digits;
 
-    let exponent = 0n;
-    while (true) {
-      const quotient = digits / 10n;
-      const remainder = digits - (quotient * 10n);
+    const rawSignificand = digits.toString();
+    const significand = rawSignificand.replace(/0+/, "");
 
-      if (remainder !== 0n) break;
-
-      digits = quotient;
-      exponent++;
-    }
+    const exponent = BigInt(rawSignificand.length - significand.length);
+    digits = BigInt(significand);
 
     return {
       nan: false,
