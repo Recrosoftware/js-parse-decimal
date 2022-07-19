@@ -10,9 +10,9 @@ It can be used as a building block for serializing decimal numbers into a binary
 You can simply parse any number as follows
 
 ```typescript
-import {parse} from 'https://deno.land/x/parse_decimal/mod.ts'
+import {parseDecimal} from 'https://deno.land/x/parse_decimal/mod.ts'
 
 
-const definition = parse('1.423e422');
+const definition = parseDecimal('1.423e422');
 // { nan: false, finite: false, negative: false, significand: 1432n, exponent: 419n }
 ```
